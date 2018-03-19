@@ -1,6 +1,6 @@
 package com.server.chirp.util;
 
-public class UserAppException extends Exception {
+public class UserAppException extends CosmicRayException {
 	private static final long serialVersionUID = 1L;
 
 	public UserAppException(String message) {
