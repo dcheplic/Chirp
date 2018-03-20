@@ -1,10 +1,12 @@
 package com.server.chirp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.swing.text.AttributeSet.CharacterAttribute;
 
+import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
 import com.server.chirp.util.UserAppException;
 
@@ -14,7 +16,7 @@ public interface UserService {
 	public List<User> findUserByName(String name) throws UserAppException; //will return list of all users named "name"
 	public User findUserByEmail(String email) throws UserAppException; //will return user based on email
 	public User findUserByHandle(String handle) throws UserAppException; //will return user based on handle
-	public void createUser(String name, String email, String handle) throws UserAppException; //will create new user
+	public void createUser(String name, String email, String password, String handle, ArrayList<Chirp> chirpList) throws UserAppException; //will create new user
 	public void updateUser(UUID id, String name, String email, String handle) throws UserAppException; //will update user with id "id"
 	public void deleteUser(UUID id) throws UserAppException; //will delete user with id "id"
 }

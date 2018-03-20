@@ -64,6 +64,11 @@ public class InMemoryUserStorage implements UserStorage{
 		users.get(id).setEmail(email);
 		users.get(id).setHandle(handle);
 	}
+	
+	@Override
+	public void updatePassword(String id, String password) {
+		users.get(id).setPassword(password);
+	}
 
 	@Override
 	public void deleteUser(String id) throws StorageException {
