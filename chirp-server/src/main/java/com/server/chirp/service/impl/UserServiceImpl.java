@@ -55,6 +55,12 @@ public class UserServiceImpl implements UserService{
 		storage.updateUser(id.toString(), name, email, handle);
 		
 	}
+	
+	@Override
+	public void updatePassword(UUID id, String password) {
+		storage.updatePassword(id.toString(), password);
+		
+	}
 
 	@Override
 	public void deleteUser(UUID id) throws UserAppException {
