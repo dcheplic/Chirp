@@ -1,8 +1,11 @@
 package com.server.chirp.service.impl;
 
+import java.nio.channels.ScatteringByteChannel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
 import com.server.chirp.service.UserService;
 import com.server.chirp.storage.UserStorage;
@@ -41,8 +44,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void createUser(String name, String email, String handle) throws UserAppException {
-		User u = new User(name, email, handle, UUID.randomUUID());
+	public void createUser(String name, String email, String password, String handle, ArrayList<Chirp> chirpList) throws UserAppException {
+		User u = new User(name, email, password, handle, UUID.randomUUID(), chirpList);
 		storage.addUser(u);
 		
 	}
@@ -50,6 +53,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateUser(UUID id, String name, String email, String handle) throws UserAppException {
 		storage.updateUser(id.toString(), name, email, handle);
+		
+	}
+	
+	@Override
+	public void updatePassword(UUID id, String password) {
+		storage.updatePassword(id.toString(), password);
 		
 	}
 
