@@ -2,11 +2,14 @@ package com.server.chirp.tests;
 
 import static org.junit.Assert.*;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
 
 public class UserTests {
@@ -14,7 +17,10 @@ public class UserTests {
 	
 	@Before
 	public void setUp() {
-		user = new User("John Deer", "fakemail@gmail.com", "UDntKnwMe", UUID.randomUUID());
+		ArrayList<Chirp> list = new ArrayList<>();
+		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
+		list.add(c1);
+		user = new User("John Deer", "fakemail@gmail.com", "notreal", "UDntKnwMe", UUID.randomUUID(), list);
 	}
 	
 	@Test
@@ -55,6 +61,12 @@ public class UserTests {
 		UUID id = UUID.randomUUID();
 		user.setId(id);
 		assertEquals(id, user.getId());
+	}
+	
+	@Test
+	public void chirp_functions() {
+		Chirp chirp = user.getChirpList().get(0);
+		assertEquals("Hello!", chirp.getMessage());
 	}
 
 }
