@@ -8,6 +8,12 @@ import static spark.Spark.get;
 
 public class UserController {
 	
+	// HTTP verb -> REST meaning
+	// GET -> read
+	// PUT -> create
+	// POST -> update
+	// DELETE -> delete
+	
 	public UserController(UserService service) {
 		get("/user",(req, res) -> {
 			return service.getUsers();

@@ -23,10 +23,11 @@ public class StorageTests {
 	public User u3;
 	public User u4;
 	public User u5;
+	public ArrayList<Chirp> list;
 
 	@Before
 	public void setUp() throws StorageException {
-		ArrayList<Chirp> list = new ArrayList<>();
+		list = new ArrayList<>();
 		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
 		list.add(c1);
 		u1 = new User("Bob", "palindrome@gmail.com", "pass", "boob", UUID.randomUUID(), list);
@@ -44,12 +45,47 @@ public class StorageTests {
 
 	@Test
 	public void findUserByName_works() throws StorageException {
-		assertEquals("supervisor@sunnyvale.org", storage.findUserByName("Jim").get(0).getEmail());
+		assertEquals(u5, storage.findUserByName("Jim").get(1));
 	}
 
 	@Test
-	public void findUserByEmail() throws StorageException {
+	public void findUserByEmail_works() throws StorageException {
 		assertEquals(u4, storage.findUserByEmail("email@gmail.com"));
+	}
+	
+	@Test
+	public void findUserByHandle_works() throws StorageException {
+		assertEquals(u3, storage.findUserByHandle("bwiillll"));
+	}
+	
+	@Test
+	public void addUser_works() throws StorageException {
+		User u6 = new User("John", "beatles@yahoo.com", "ono", "Gone2Soon", UUID.randomUUID(), list);
+		storage.addUser(u6);
+		assertEquals(u6, storage.findUserByHandle("Gone2Soon"));
+	}
+	
+	@Test
+	public void updateUser_works() throws StorageException {
+		String uid = u3.getId().toString();
+		storage.updateUser(uid, "James", "sawhack@gmail.com", "2x4");
+		assertEquals(u3, storage.findUserByName("James").get(0));
+		assertEquals(u3, storage.findUserByEmail("sawhack@gmail.com"));
+		assertEquals(u3, storage.findUserByHandle("2x4"));
+	}
+	
+	@Test
+	public void updatePassword_works() throws StorageException {
+		String uid = u3.getId().toString();
+		storage.updatePassword(uid, "wham");
+		assertEquals("wham", u3.getPassword());
+	}
+	
+	@Test
+	public void deleteUser_works() throws StorageException {
+		String uid = u3.getId().toString();
+		storage.deleteUser(uid);
+		assertEquals(4, storage.getUsers().size());
 	}
 
 }
