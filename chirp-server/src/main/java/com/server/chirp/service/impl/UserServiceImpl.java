@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService{
 	public UserServiceImpl(UserStorage storage) {
 		this.storage = storage;
 	}
+	
 	@Override
 	public List<User> getUsers() throws UserAppException {
 		return storage.getUsers();

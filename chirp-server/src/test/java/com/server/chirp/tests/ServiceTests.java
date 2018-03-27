@@ -45,7 +45,13 @@ public class ServiceTests {
 	@Test
 	public void createUser_works() throws UserAppException{
 		service.createUser(u1.getName(), u1.getEmail(), u1.getPassword(), u1.getHandle(), list);
-		assertEquals(u1.getHandle(), service.findUserByEmail("palindrome@gmail.com").getHandle());
+		assertEquals(u1.getName(), service.findUserByEmail("palindrome@gmail.com").getName());
+	}
+	
+	@Test
+	public void findUserByEmail_works() throws UserAppException {
+		service.createUser(u2.getName(), u2.getEmail(), u2.getPassword(), u2.getHandle(), list);
+		assertEquals(u2.getName(), service.findUserByEmail("supervisor@sunnyvale.org").getName());
 	}
 
 }
