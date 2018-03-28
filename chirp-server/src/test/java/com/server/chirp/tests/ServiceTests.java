@@ -29,29 +29,68 @@ public class ServiceTests {
 	public ArrayList<Chirp> list;
 
 	@Before
-	public void setUp() throws StorageException {
+	public void setUp() throws StorageException, UserAppException {
 		storage = new InMemoryUserStorage();
 		list = new ArrayList<>();
 		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
 		list.add(c1);
-		u1 = new User("Bob", "palindrome@gmail.com", "pass", "boob", UUID.randomUUID(), list);
-		u2 = new User("Jim", "supervisor@sunnyvale.org", "word", "drnk", UUID.randomUUID(), list);
-		u3 = new User("Bill", "will@yahoo.com", "billiam","bwiillll", UUID.randomUUID(), list);
-		u4 = new User("Barb","email@gmail.com", "wordpass","barbie", UUID.randomUUID(), list);
-		u5 = new User("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan", UUID.randomUUID(), list);
 		service = new UserServiceImpl(storage);
+		service.createUser("Bob", "palindrome@gmail.com", "pass", "boob", list);
+		service.createUser("Jim", "supervisor@sunnyvale.org", "word", "drnk", list);
+		service.createUser("Bill", "will@yahoo.com", "billiam","bwiillll", list);
+		service.createUser("Barb","email@gmail.com", "wordpass","barbie", list);
+		service.createUser("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan", list);
 	}
 	
 	@Test
-	public void createUser_works() throws UserAppException{
-		service.createUser(u1.getName(), u1.getEmail(), u1.getPassword(), u1.getHandle(), list);
-		assertEquals(u1.getName(), service.findUserByEmail("palindrome@gmail.com").getName());
+	public void getUsers_works() throws UserAppException {
+		assertEquals(5, service.getUsers().size());
 	}
 	
 	@Test
 	public void findUserByEmail_works() throws UserAppException {
-		service.createUser(u2.getName(), u2.getEmail(), u2.getPassword(), u2.getHandle(), list);
-		assertEquals(u2.getName(), service.findUserByEmail("supervisor@sunnyvale.org").getName());
+		assertEquals("Jim", service.findUserByEmail("supervisor@sunnyvale.org").getName());
 	}
+	
+	@Test
+	public void findUserByHandle_works() throws UserAppException {
+		assertEquals("Bill", service.findUserByHandle("bwiillll").getName());
+	}
+	
+	@Test
+	public void findUserById_works() throws UserAppException {
+		UUID id = service.getUsers().get(2).getId();
+		assertEquals("Bill", service.findUserById(id).getName());
+	}
+	
+	@Test
+	public void createUser_works() throws UserAppException {
+		service.createUser("John", "beatles@rock.roll", "ono", "1M4G1N3", list);
+		assertEquals("John", service.findUserByHandle("1M4G1N3").getName());
+		assertEquals(6, service.getUsers().size());
+	}
+	
+	@Test
+	public void updateUser_works() throws UserAppException {
+		UUID id = service.getUsers().get(2).getId();
+		service.updateUser(id, "Link", "triforce@hyrule.com", "LegendaryHero");
+		assertEquals("Link", service.findUserById(id).getName());
+	}
+	
+	@Test
+	public void updatePassword_works() throws UserAppException {
+		UUID id = service.getUsers().get(2).getId();
+		service.updatePassword(id, "words");
+		assertEquals("words", service.findUserById(id).getPassword());
+	}
+	
+	@Test
+	public void deleteUser_works() throws UserAppException {
+		UUID id = service.getUsers().get(2).getId();
+		service.deleteUser(id);
+		assertEquals(4, service.getUsers().size());
+	}
+	
+	
 
 }

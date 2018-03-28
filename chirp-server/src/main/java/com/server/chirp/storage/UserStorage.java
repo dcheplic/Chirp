@@ -2,8 +2,6 @@ package com.server.chirp.storage;
 
 import java.util.List;
 
-import org.hamcrest.BaseDescription;
-
 import com.server.chirp.model.User;
 import com.server.chirp.util.StorageException;
 
