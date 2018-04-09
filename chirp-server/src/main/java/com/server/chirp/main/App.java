@@ -13,10 +13,11 @@ import com.server.chirp.storage.impl.InMemoryUserStorage;
 
 public class App {
 	public static void main(String[] args) {
-		port(80);
+		port(5000);
 		BasicConfigurator.configure();
-		after((req, res) -> res.type("application/json"));
 		new UserController(new UserServiceImpl(new InMemoryUserStorage()));
+		
+		System.out.println(UUID.randomUUID());
 	}
 	
 //	public static void mainzz(String[] args) {

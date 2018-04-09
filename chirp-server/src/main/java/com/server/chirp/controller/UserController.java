@@ -26,31 +26,31 @@ public class UserController {
 	public UserController(UserService service) {
 		get("/users",(req, res) -> {
 			if(service.getUsers() == null)
-				halt(404, "Not found");
+				halt(404, "Users not found");
 			return service.getUsers();
 		}, json());
 
 		get("/users/:id", (req, res) -> {
-			if(service.findUserById(UUID.fromString(req.attribute(":id"))) == null)
-				halt(404, "Not found");
-			return service.findUserById(UUID.fromString(req.attribute(":id")));
+			if(service.findUserById(UUID.fromString(req.params("id"))) == null)
+				halt(404, "User not found");
+			return service.findUserById(UUID.fromString(req.params("id")));
 		}, json());	
 
 		get("/users/:email", (req, res) -> {
 			if(service.findUserByEmail(req.attribute(":email")) == null)
-				halt(404, "Not found");
+				halt(404, "User not found");
 			return service.findUserByEmail(req.attribute(":email"));
 		}, json());
 
 		get("/users/:handle", (req, res) -> {
 			if(service.findUserByHandle(req.attribute(":handle")) == null)
-				halt(404, "Not found");
+				halt(404, "User not found");
 			return service.findUserByHandle(req.attribute(":handle"));
 		}, json());
 
 		get("/users/:name", (req, res) -> {
 			if(service.findUserByName(req.attribute(":name")) == null)
-				halt(404, "Not found");
+				halt(404, "User not found");
 			return service.findUserByName(req.attribute(":name"));
 		}, json());
 
@@ -65,7 +65,7 @@ public class UserController {
 
 		post("/users/:id", (req, res) -> {
 			if(service.findUserById(UUID.fromString(req.attribute(":id"))) == null)
-				halt(404, "Not found");
+				halt(404, "User not found");
 			UUID id = UUID.fromString(req.attribute(":id"));
 			String name = req.params("name");
 			String email = req.params("email");
@@ -75,10 +75,19 @@ public class UserController {
 			service.updatePassword(id, password);
 			return "User updated";
 		}, json());	
+		
+		post("/users/:id", (req, res) -> {
+			if(service.findUserById(UUID.fromString(req.attribute(":id"))) == null)
+				halt(404, "User not found");
+			UUID id = UUID.fromString(req.attribute(":id"));
+			String password = req.params("password");
+			service.updatePassword(id, password);
+			return "User updated";
+		}, json());	
 
 		delete("/users/:id", (req, res) -> {
 			if(service.findUserById(UUID.fromString(req.attribute(":id"))) == null)
-				halt(404, "Not found");
+				halt(404, "User not found");
 			service.deleteUser(UUID.fromString(req.attribute(":id")));
 			return "User deleted";
 		}, json());	
