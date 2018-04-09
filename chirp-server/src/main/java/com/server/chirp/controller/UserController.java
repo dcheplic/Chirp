@@ -32,7 +32,7 @@ public class UserController {
 		}, json());
 
 		//returns user based on id
-		get("/users/:id", (req, res) -> {
+		get("/users/id", (req, res) -> {
 			if(service.findUserById(UUID.fromString(req.params("id"))) == null)
 				halt(404, "User not found");
 			return service.findUserById(UUID.fromString(req.params("id")));
@@ -46,14 +46,14 @@ public class UserController {
 		}, json());
 
 		//returns user based on handle
-		get("/users/:handle", (req, res) -> {
+		get("/users/handle", (req, res) -> {
 			if(service.findUserByHandle(req.params("handle")) == null)
 				halt(404, "User not found");
 			return service.findUserByHandle(req.params("handle"));
 		}, json());
 
 		//returns users based on name
-		get("/users/:name", (req, res) -> {
+		get("/users/name", (req, res) -> {
 			if(service.findUserByName(req.params("name")) == null)
 				halt(404, "User not found");
 			return service.findUserByName(req.params("name"));
