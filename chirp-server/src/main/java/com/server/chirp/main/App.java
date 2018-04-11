@@ -1,5 +1,5 @@
 package com.server.chirp.main;
-import static spark.Spark.*;
+import static spark.Spark.port;
 
 import java.util.UUID;
 
@@ -17,11 +17,11 @@ public class App {
 		BasicConfigurator.configure();
 		new UserController(new UserServiceImpl(new InMemoryUserStorage()));
 		
-		System.out.println(UUID.randomUUID());
+		//System.out.println(UUID.randomUUID());
 	}
 	
-//	public static void mainzz(String[] args) {
-//		User u = new User("Bill", "bill@comcast.net", "schlick", "will", UUID.randomUUID(), null);
+//	public static void main(String[] args) {
+//		User u = new User("Bill", "bill@comcast.net", "schlick", "will", UUID.randomUUID());
 //		Gson gson = new Gson();
 //		String s = gson.toJson(u);
 //		System.out.println(s);

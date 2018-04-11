@@ -30,11 +30,11 @@ public class StorageTests {
 		list = new ArrayList<>();
 		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
 		list.add(c1);
-		u1 = new User("Bob", "palindrome@gmail.com", "pass", "boob", UUID.randomUUID(), list);
-		u2 = new User("Jim", "supervisor@sunnyvale.org", "word", "drnk", UUID.randomUUID(), list);
-		u3 = new User("Bill", "will@yahoo.com", "billiam","bwiillll", UUID.randomUUID(), list);
-		u4 = new User("Barb","email@gmail.com", "wordpass","barbie", UUID.randomUUID(), list);
-		u5 = new User("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan", UUID.randomUUID(), list);
+		u1 = new User("Bob", "palindrome@gmail.com", "pass", "boob", UUID.randomUUID());
+		u2 = new User("Jim", "supervisor@sunnyvale.org", "word", "drnk", UUID.randomUUID());
+		u3 = new User("Bill", "will@yahoo.com", "billiam","bwiillll", UUID.randomUUID());
+		u4 = new User("Barb","email@gmail.com", "wordpass","barbie", UUID.randomUUID());
+		u5 = new User("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan", UUID.randomUUID());
 		storage = new InMemoryUserStorage();
 		storage.addUser(u1);
 		storage.addUser(u2);
@@ -60,7 +60,7 @@ public class StorageTests {
 	
 	@Test
 	public void addUser_works() throws StorageException {
-		User u6 = new User("John", "beatles@yahoo.com", "ono", "Gone2Soon", UUID.randomUUID(), list);
+		User u6 = new User("John", "beatles@yahoo.com", "ono", "Gone2Soon", UUID.randomUUID());
 		storage.addUser(u6);
 		assertEquals(u6, storage.findUserByHandle("Gone2Soon"));
 	}

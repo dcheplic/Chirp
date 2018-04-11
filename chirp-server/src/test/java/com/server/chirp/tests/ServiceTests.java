@@ -26,20 +26,17 @@ public class ServiceTests {
 	public User u3;
 	public User u4;
 	public User u5;
-	public ArrayList<Chirp> list;
 
 	@Before
 	public void setUp() throws StorageException, UserAppException {
 		storage = new InMemoryUserStorage();
-		list = new ArrayList<>();
 		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
-		list.add(c1);
 		service = new UserServiceImpl(storage);
-		service.createUser("Bob", "palindrome@gmail.com", "pass", "boob", list);
-		service.createUser("Jim", "supervisor@sunnyvale.org", "word", "drnk", list);
-		service.createUser("Bill", "will@yahoo.com", "billiam","bwiillll", list);
-		service.createUser("Barb","email@gmail.com", "wordpass","barbie", list);
-		service.createUser("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan", list);
+		service.createUser("Bob", "palindrome@gmail.com", "pass", "boob");
+		service.createUser("Jim", "supervisor@sunnyvale.org", "word", "drnk");
+		service.createUser("Bill", "will@yahoo.com", "billiam","bwiillll");
+		service.createUser("Barb","email@gmail.com", "wordpass","barbie");
+		service.createUser("Jim", "hacksaw@comcast.net", "wasspord","HacksawJimDugan");
 	}
 	
 	@Test
@@ -65,7 +62,7 @@ public class ServiceTests {
 	
 	@Test
 	public void createUser_works() throws UserAppException {
-		service.createUser("John", "beatles@rock.roll", "ono", "1M4G1N3", list);
+		service.createUser("John", "beatles@rock.roll", "ono", "1M4G1N3");
 		assertEquals("John", service.findUserByHandle("1M4G1N3").getName());
 		assertEquals(6, service.getUsers().size());
 	}

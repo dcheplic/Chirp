@@ -20,7 +20,7 @@ public class UserTests {
 		ArrayList<Chirp> list = new ArrayList<>();
 		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
 		list.add(c1);
-		user = new User("John Deer", "fakemail@gmail.com", "notreal", "UDntKnwMe", UUID.randomUUID(), list);
+		user = new User("John Deer", "fakemail@gmail.com", "notreal", "UDntKnwMe", UUID.randomUUID());
 	}
 	
 	@Test
@@ -62,11 +62,4 @@ public class UserTests {
 		user.setId(id);
 		assertEquals(id, user.getId());
 	}
-	
-	@Test
-	public void chirp_functions() {
-		Chirp chirp = user.getChirpList().get(0);
-		assertEquals("Hello!", chirp.getMessage());
-	}
-
 }

@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void createUser(String name, String email, String password, String handle, ArrayList<Chirp> chirpList) throws UserAppException {
-		User u = new User(name, email, password, handle, UUID.randomUUID(), chirpList);
+	public void createUser(String name, String email, String password, String handle) throws UserAppException {
+		User u = new User(name, email, password, handle, UUID.randomUUID());
 		storage.addUser(u);
 		
 	}
