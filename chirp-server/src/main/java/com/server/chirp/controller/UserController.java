@@ -1,7 +1,6 @@
 package com.server.chirp.controller;
 
 import com.google.gson.Gson;
-import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
 import com.server.chirp.service.UserService;
 
@@ -12,7 +11,6 @@ import static spark.Spark.put;
 import static spark.Spark.delete;
 import static spark.Spark.halt;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserController {

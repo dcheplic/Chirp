@@ -28,8 +28,6 @@ public class StorageTests {
 	@Before
 	public void setUp() throws StorageException {
 		list = new ArrayList<>();
-		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
-		list.add(c1);
 		u1 = new User("Bob", "palindrome@gmail.com", "pass", "boob", UUID.randomUUID());
 		u2 = new User("Jim", "supervisor@sunnyvale.org", "word", "drnk", UUID.randomUUID());
 		u3 = new User("Bill", "will@yahoo.com", "billiam","bwiillll", UUID.randomUUID());

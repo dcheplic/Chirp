@@ -30,7 +30,6 @@ public class ServiceTests {
 	@Before
 	public void setUp() throws StorageException, UserAppException {
 		storage = new InMemoryUserStorage();
-		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
 		service = new UserServiceImpl(storage);
 		service.createUser("Bob", "palindrome@gmail.com", "pass", "boob");
 		service.createUser("Jim", "supervisor@sunnyvale.org", "word", "drnk");

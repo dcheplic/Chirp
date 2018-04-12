@@ -1,14 +1,7 @@
 package com.server.chirp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import javax.swing.text.AttributeSet.CharacterAttribute;
-
-import org.eclipse.jetty.util.security.Password;
-
-import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
 import com.server.chirp.util.UserAppException;
 

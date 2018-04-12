@@ -18,8 +18,6 @@ public class UserTests {
 	@Before
 	public void setUp() {
 		ArrayList<Chirp> list = new ArrayList<>();
-		Chirp c1 = new Chirp("Hello!", ZonedDateTime.now());
-		list.add(c1);
 		user = new User("John Deer", "fakemail@gmail.com", "notreal", "UDntKnwMe", UUID.randomUUID());
 	}
 	
