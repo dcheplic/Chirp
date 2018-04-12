@@ -1,7 +1,8 @@
 package com.server.chirp.service.impl;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.server.chirp.model.Chirp;
 import com.server.chirp.model.User;
@@ -28,19 +29,18 @@ public class ChirpServiceImpl implements ChirpService{
 	}
 
 	@Override
-	public List<Chirp> findChirpsByDate(ZonedDateTime date) throws UserAppException {
+	public List<Chirp> findChirpsByDate(Date date) throws UserAppException {
 		return storage.findChirpsByDate(date.toString());
 	}
 
 	@Override
-	public List<Chirp> findChirpsByUser(User user) throws UserAppException {
-		return storage.findChirpsByUser(user);
+	public List<Chirp> findChirpsByUser(UUID id) throws UserAppException {
+		return storage.findChirpsByUser(id.toString());
 	}
 
 	@Override
-	public void addChirp(String message, ZonedDateTime date, User user) throws UserAppException {
+	public void addChirp(String message, Date date, User user) throws UserAppException {
 		Chirp chirp = new Chirp(message, date, user);
 		storage.addChirp(chirp);
 	}
-
 }

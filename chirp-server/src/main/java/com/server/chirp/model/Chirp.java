@@ -1,16 +1,16 @@
 package com.server.chirp.model;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class Chirp {
 	private String message;
-	private ZonedDateTime date;
+	private Date date;
 	private User user;
 	
 	//default constructor needed for Gson
 	private Chirp() {}
 	
-	public Chirp(String message, ZonedDateTime date, User user) {
+	public Chirp(String message, Date date, User user) {
 		this.message = message;
 		this.date = date;
 		this.user = user;
@@ -20,7 +20,7 @@ public class Chirp {
 		this.message = message;
 	}
 	
-	public void setDate(ZonedDateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	
@@ -32,7 +32,7 @@ public class Chirp {
 		return message;
 	}
 	
-	public ZonedDateTime getDate() {
+	public Date getDate() {
 		return date;
 	}
 	

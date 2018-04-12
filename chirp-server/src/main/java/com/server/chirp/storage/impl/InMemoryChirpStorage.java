@@ -1,6 +1,5 @@
 package com.server.chirp.storage.impl;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +42,10 @@ public class InMemoryChirpStorage implements ChirpStorage{
 	}
 
 	@Override
-	public List<Chirp> findChirpsByUser(User user) throws StorageException {
+	public List<Chirp> findChirpsByUser(String id) throws StorageException {
 		List<Chirp> result = new ArrayList<Chirp>();
 		for(Chirp chirp : chirps.values())
-			if(chirp.getUser().getId().toString().equals(user.getId().toString()))
+			if(chirp.getUser().getId().toString().equals(id))
 				result.add(chirp);
 		return result;
 	}
