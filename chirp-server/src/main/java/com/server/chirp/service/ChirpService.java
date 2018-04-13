@@ -1,5 +1,6 @@
 package com.server.chirp.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,6 @@ public interface ChirpService {
 	public List<Chirp> getChirps() throws UserAppException; //returns list of all Chirps
 	public List<Chirp> findChirpsByMessage(String message) throws UserAppException; //returns list of Chirps matching message
 	public List<Chirp> findChirpsByDate(Date date) throws UserAppException; //returns list of Chirps matching date
-	public List<Chirp> findChirpsByUser(UUID id) throws UserAppException; //returns list of Chirps matching user id
-	public void addChirp(String message, Date date, User user) throws UserAppException; //creates new Chirp
+	public List<Chirp> findChirpsByUser(String id) throws UserAppException; //returns list of Chirps matching user id
+	public void addChirp(String message, Date date, String userId) throws UserAppException, ParseException; //creates new Chirp
 }

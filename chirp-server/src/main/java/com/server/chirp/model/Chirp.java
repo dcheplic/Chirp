@@ -1,19 +1,20 @@
 package com.server.chirp.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Chirp {
 	private String message;
 	private Date date;
-	private User user;
+	private String userId;
 	
 	//default constructor needed for Gson
 	private Chirp() {}
 	
-	public Chirp(String message, Date date, User user) {
+	public Chirp(String message, Date date, String userId) {
 		this.message = message;
 		this.date = date;
-		this.user = user;
+		this.userId = userId;
 	}
 	
 	public void setMessage(String message) {
@@ -24,8 +25,8 @@ public class Chirp {
 		this.date = date;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	public String getMessage() {
@@ -36,7 +37,7 @@ public class Chirp {
 		return date;
 	}
 	
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 }

@@ -1,6 +1,7 @@
 package com.server.chirp.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.server.chirp.model.Chirp;
 import com.server.chirp.service.ChirpService;
 
@@ -10,10 +11,8 @@ import static spark.Spark.halt;
 import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
-import java.util.concurrent.locks.ReadWriteLock;
 
 public class ChirpController {
 
@@ -24,7 +23,7 @@ public class ChirpController {
 	// DELETE -> delete
 
 	public ChirpController(ChirpService service) {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("EEE, dd/MM/yyyy").create();
 		get("/chirps", (req, res) -> {
 			if(service.getChirps() == null) {
 				halt(404, "Chirps not found");
@@ -42,26 +41,27 @@ public class ChirpController {
 		}, json());
 		
 		get("/chirps/:id", (req, res) -> {
-			if(service.findChirpsByUser(UUID.fromString(req.params("id"))) == null) {
+			if(service.findChirpsByUser(req.params("id")) == null) {
 				halt(404, "Chirps not found");
 				return null;
 			}
-			return service.findChirpsByUser(UUID.fromString(req.params("id")));
+			return service.findChirpsByUser(req.params("id"));
 		}, json());
 		
 		get("/chirps/:date", (req, res) -> {
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(req.params("date"));
 			if(service.findChirpsByDate(date) == null) {
-				halt(404, "Shirps not found");
+				halt(404, "Chirps not found");
 				return null;
 			}
 			return service.findChirpsByDate(date);
 		}, json());
 		
 		post("/chirps/a", (req, res) -> {
-			Chirp chirp = gson.fromJson(req.body(), Chirp.class);
-			service.addChirp(chirp.getMessage(), chirp.getDate(), chirp.getUser());
-			return "Chirp created";
+			ChirpTemp chirp = gson.fromJson(req.body(), ChirpTemp.class);
+			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
+			service.addChirp(chirp.getMessage(), date, chirp.getUserId());
+			return "Chirp added";
 		}, json());
 	}
 
@@ -71,6 +71,16 @@ public class ChirpController {
 
 	public static ResponseTransformer json() {
 		return UserController::toJson;
+	}
+	
+	public class ChirpTemp {
+		private String message;
+		private String date;
+		private String userId;
+		
+		public String getMessage() {return message;}
+		public String getDate() {return date;}
+		public String getUserId() {return userId;}
 	}
 
 }

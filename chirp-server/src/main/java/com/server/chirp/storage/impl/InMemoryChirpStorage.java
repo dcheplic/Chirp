@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.server.chirp.model.Chirp;
-import com.server.chirp.model.User;
 import com.server.chirp.storage.ChirpStorage;
 import com.server.chirp.util.StorageException;
 
 public class InMemoryChirpStorage implements ChirpStorage{
 	
-	Map<User, Chirp> chirps;
+	Map<String, Chirp> chirps;
 	
 	public InMemoryChirpStorage() {
 		chirps = new HashMap<>();
@@ -45,14 +44,14 @@ public class InMemoryChirpStorage implements ChirpStorage{
 	public List<Chirp> findChirpsByUser(String id) throws StorageException {
 		List<Chirp> result = new ArrayList<Chirp>();
 		for(Chirp chirp : chirps.values())
-			if(chirp.getUser().getId().toString().equals(id))
+			if(chirp.getUserId().toString().equals(id))
 				result.add(chirp);
 		return result;
 	}
 
 	@Override
 	public void addChirp(Chirp chirp) throws StorageException {
-		chirps.put(chirp.getUser(), chirp);
+		chirps.put(chirp.getUserId(), chirp);
 	}
 
 }
