@@ -12,4 +12,5 @@ public interface ChirpStorage {
 	public List<Chirp> findChirpsByDate(String date) throws StorageException; //returns list of Chirps matching date
 	public List<Chirp> findChirpsByUser(String id) throws StorageException; //returns list of Chirps matching user id
 	public void addChirp(Chirp chirp) throws StorageException; //creates new Chirp
+	List<Chirp> findChirpsContainingUser(String handle) throws StorageException;
 }

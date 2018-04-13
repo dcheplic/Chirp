@@ -23,7 +23,7 @@ public class ChirpController {
 	// DELETE -> delete
 
 	public ChirpController(ChirpService service) {
-		Gson gson = new GsonBuilder().setDateFormat("EEE, dd/MM/yyyy").create();
+		Gson gson = new GsonBuilder().setLenient().setDateFormat("EEE, dd/MM/yyyy").create();
 		get("/chirps", (req, res) -> {
 			if(service.getChirps() == null) {
 				halt(404, "Chirps not found");
@@ -58,7 +58,7 @@ public class ChirpController {
 		}, json());
 		
 		post("/chirps/a", (req, res) -> {
-			ChirpTemp chirp = gson.fromJson(req.body(), ChirpTemp.class);
+			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
 			service.addChirp(chirp.getMessage(), date, chirp.getUserId());
 			return "Chirp added";
@@ -73,7 +73,7 @@ public class ChirpController {
 		return UserController::toJson;
 	}
 	
-	public class ChirpTemp {
+	public class ChirpTransport {
 		private String message;
 		private String date;
 		private String userId;

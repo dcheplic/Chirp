@@ -1,13 +1,9 @@
 package com.server.chirp.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import com.server.chirp.model.Chirp;
-import com.server.chirp.model.User;
 import com.server.chirp.service.ChirpService;
 import com.server.chirp.storage.ChirpStorage;
 import com.server.chirp.util.UserAppException;
@@ -38,6 +34,12 @@ public class ChirpServiceImpl implements ChirpService{
 	@Override
 	public List<Chirp> findChirpsByUser(String id) throws UserAppException {
 		return storage.findChirpsByUser(id);
+	}
+	
+
+	@Override
+	public List<Chirp> findChirpsContainingUser(String handle) throws UserAppException {
+		return storage.findChirpsContainingUser(handle);
 	}
 
 	@Override

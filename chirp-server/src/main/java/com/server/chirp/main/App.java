@@ -1,13 +1,9 @@
 package com.server.chirp.main;
 import static spark.Spark.port;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 import org.apache.log4j.BasicConfigurator;
 
-import com.google.gson.Gson;
 import com.server.chirp.controller.ChirpController;
 import com.server.chirp.controller.UserController;
 import com.server.chirp.service.impl.ChirpServiceImpl;
@@ -21,16 +17,5 @@ public class App {
 		BasicConfigurator.configure();
 		new UserController(new UserServiceImpl(new InMemoryUserStorage()));
 		new ChirpController(new ChirpServiceImpl(new InMemoryChirpStorage()));
-		
-		//System.out.println(UUID.randomUUID());
 	}
-	
-//	public static void main(String[] args) {
-//		User u = new User("Bill", "bill@comcast.net", "schlick", "will", UUID.randomUUID());
-//		Gson gson = new Gson();
-//		String s = gson.toJson(u);
-//		System.out.println(s);
-//		User u2 = gson.fromJson(s, User.class);
-//		System.out.println(u2);
-//	}
 }
