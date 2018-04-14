@@ -57,6 +57,14 @@ public class ChirpController {
 			return service.findChirpsByDate(date);
 		}, json());
 		
+		get("/chirps/:handle", (req, res) -> {
+			if(service.findChirpsByUser(req.params("handle")) == null) {
+				halt(404, "Chirps not found");
+				return null;
+			}
+			return service.findChirpsContainingUser(req.params("handle"));
+		}, json());
+		
 		post("/chirps/a", (req, res) -> {
 			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());

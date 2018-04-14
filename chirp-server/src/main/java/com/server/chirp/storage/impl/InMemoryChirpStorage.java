@@ -9,7 +9,6 @@ import com.server.chirp.util.StorageException;
 
 public class InMemoryChirpStorage implements ChirpStorage{
 	
-	// TODO ArrayList of Chirps
 	private ArrayList<Chirp> chirps;
 	
 	public InMemoryChirpStorage() {

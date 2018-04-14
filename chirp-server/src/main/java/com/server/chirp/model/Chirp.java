@@ -1,7 +1,11 @@
 package com.server.chirp.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+
+import com.amazonaws.services.dynamodbv2.document.Item;
 
 public class Chirp {
 	private String message;
@@ -39,5 +43,21 @@ public class Chirp {
 	
 	public String getUserId() {
 		return userId;
+	}
+	
+	public static Chirp fromItem(Item item) {
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(item.getString("date"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Chirp(item.getString("message"), date, item.getString("id"));
+	}
+	
+	public void fillItem(Item item) {
+		item.withPrimaryKey("id", getUserId())
+		.withString("message", getMessage())
+		.with("date", getDate().toString());
 	}
 }

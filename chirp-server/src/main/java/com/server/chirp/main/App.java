@@ -1,7 +1,6 @@
 package com.server.chirp.main;
 import static spark.Spark.port;
 
-
 import org.apache.log4j.BasicConfigurator;
 
 import com.server.chirp.controller.ChirpController;

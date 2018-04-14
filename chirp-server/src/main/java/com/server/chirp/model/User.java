@@ -1,7 +1,8 @@
 package com.server.chirp.model;
 
-import java.util.ArrayList;
 import java.util.UUID;
+
+import com.amazonaws.services.dynamodbv2.document.Item;
 
 public class User {
 	private String name;
@@ -60,4 +61,21 @@ public class User {
 	public UUID getId() {
 		return id;
 	}
+	
+	public static User fromItem(Item item) {
+		return new User(item.getString("name"),
+				item.getString("email"),
+				item.getString("password"),
+				item.getString("handle"),
+				UUID.fromString(item.getString("id")));
+	}
+	
+	public void fillItem(Item item) {
+		item.withPrimaryKey("id", getId().toString())
+		.withString("name", getName())
+		.withString("email", getEmail())
+		.withString("password", getPassword())
+		.withString("handle", getHandle());
+	}
+	
 }
