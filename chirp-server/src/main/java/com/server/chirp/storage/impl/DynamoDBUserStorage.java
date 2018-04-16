@@ -21,6 +21,8 @@ public class DynamoDBUserStorage implements UserStorage{
 	}
 
 	private Table getTable(DynamoDB database) {
+		if(database.getTable("users") == null)
+			return null;
 		return database.getTable("users");
 	}
 

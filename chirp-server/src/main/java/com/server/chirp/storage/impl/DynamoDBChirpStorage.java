@@ -20,6 +20,8 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 	}
 
 	private Table getTable(DynamoDB database) {
+		if(database.getTable("chirps") == null)
+			return null;
 		return database.getTable("chirps");
 	}
 

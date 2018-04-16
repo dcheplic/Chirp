@@ -5,14 +5,14 @@ import java.util.UUID;
 
 import com.server.chirp.model.User;
 import com.server.chirp.service.UserService;
-import com.server.chirp.storage.UserStorage;
+import com.server.chirp.storage.impl.DynamoDBUserStorage;
 import com.server.chirp.util.UserAppException;
 
-public class UserServiceImpl implements UserService{
+public class DynamoDBUserService implements UserService{
 
-	private UserStorage storage;
+	private DynamoDBUserStorage storage;
 	
-	public UserServiceImpl(UserStorage storage) {
+	public DynamoDBUserService(DynamoDBUserStorage storage) {
 		this.storage = storage;
 	}
 	
