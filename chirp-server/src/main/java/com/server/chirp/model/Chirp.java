@@ -11,6 +11,7 @@ public class Chirp {
 	private String message;
 	private Date date;
 	private String userId;
+	private String id;
 	
 	//default constructor needed for Gson
 	private Chirp() {}
@@ -19,6 +20,7 @@ public class Chirp {
 		this.message = message;
 		this.date = date;
 		this.userId = userId;
+		id = UUID.randomUUID().toString();
 	}
 	
 	public void setMessage(String message) {
@@ -59,5 +61,9 @@ public class Chirp {
 		item.withPrimaryKey("id", getUserId())
 		.withString("message", getMessage())
 		.with("date", getDate().toString());
+	}
+	
+	public String getId() {
+		return id;
 	}
 }
