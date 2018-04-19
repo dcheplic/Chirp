@@ -19,7 +19,7 @@ public class DynamoDBConnectionManager {
 	
 	public DynamoDBConnectionManager() {
 		client = AmazonDynamoDBClientBuilder.standard()
-				.withRegion(Regions.US_EAST_1)
+				.withRegion(Regions.US_EAST_2)
 				.build();
 	}
 	
