@@ -70,6 +70,7 @@ public class ChirpController {
 		}, json());
 		
 		post("/chirps/a", (req, res) -> {
+			chirpMap.clear();
 			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
 			chirpMap.put("id", chirp.getUserId());
