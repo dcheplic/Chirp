@@ -1,29 +1,21 @@
 package com.server.chirp.model;
 
-import java.util.UUID;
-
 import com.amazonaws.services.dynamodbv2.document.Item;
 
 public class User {
-	private String name;
 	private String email;
 	private String password;
 	private String handle;
-	private UUID id;
+	private long id;
 	
 	//default constructor, needed by GSON
 	private User(){}
 	
-	public User(String name, String email, String password, String handle, UUID id) {
-		this.name = name;
+	public User(String email, String password, String handle, long id) {
 		this.email = email;
 		this.password = password;
 		this.handle = handle;
 		this.id = id;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	public void setEmail(String email) {
@@ -38,12 +30,8 @@ public class User {
 		this.handle = handle;
 	}
 	
-	public void setId(UUID id) {
+	public void setId(long id) {
 		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 	public String getEmail() {
@@ -58,21 +46,19 @@ public class User {
 		return handle;
 	}
 	
-	public UUID getId() {
+	public long getId() {
 		return id;
 	}
 	
 	public static User fromItem(Item item) {
-		return new User(item.getString("name"),
-				item.getString("email"),
+		return new User(item.getString("email"),
 				item.getString("password"),
 				item.getString("handle"),
-				UUID.fromString(item.getString("id")));
+				Long.parseLong(item.getString("id")));
 	}
 	
 	public void fillItem(Item item) {
-		item.withPrimaryKey("id", getId().toString())
-		.withString("name", getName())
+		item.withPrimaryKey("id", getId() + "")
 		.withString("email", getEmail())
 		.withString("password", getPassword())
 		.withString("handle", getHandle());

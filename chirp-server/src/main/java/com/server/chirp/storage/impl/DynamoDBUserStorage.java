@@ -42,21 +42,9 @@ public class DynamoDBUserStorage implements UserStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		User user = null;
 		for(Item item : collection)
-			if(User.fromItem(item).getId().toString() == id)
+			if((User.fromItem(item).getId() + "").equals(id))
 				user = User.fromItem(item);
 		return user;
-	}
-
-	@Override
-	public List<User> findUserByName(String name) throws StorageException {
-		Table table = getTable(getDB());
-		ItemCollection<ScanOutcome> collection = table.scan();
-		ArrayList<User> result = new ArrayList<User>();
-		for(Item item : collection) {
-			if(User.fromItem(item).getName() == name)
-				result.add(User.fromItem(item));
-		}
-		return result;
 	}
 
 	@Override
@@ -90,14 +78,13 @@ public class DynamoDBUserStorage implements UserStorage{
 	}
 
 	@Override
-	public void updateUser(String id, String name, String email, String handle) throws StorageException {
+	public void updateUser(String id, String email, String handle) throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		User user = null;
 		for(Item item : collection) {
-			if(User.fromItem(item).getId().toString() == id) {
+			if((User.fromItem(item).getId() + "").equals(id)) {
 				user = User.fromItem(item);
-				user.setName(name);
 				user.setEmail(email);
 				user.setHandle(handle);
 			}
@@ -113,7 +100,7 @@ public class DynamoDBUserStorage implements UserStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		User user = null;
 		for(Item item : collection) {
-			if(User.fromItem(item).getId().toString() == id) {
+			if((User.fromItem(item).getId() + "").equals(id)) {
 				user = User.fromItem(item);
 				user.setPassword(password);
 			}
@@ -128,7 +115,7 @@ public class DynamoDBUserStorage implements UserStorage{
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		for(Item item : collection) {
-			if(User.fromItem(item).getId().toString() == id) {
+			if((User.fromItem(item).getId() + "").equals(id)) {
 				DeleteItemSpec deleteItemSpec = new DeleteItemSpec().withPrimaryKey("id", id);
 				table.deleteItem(deleteItemSpec);
 			}

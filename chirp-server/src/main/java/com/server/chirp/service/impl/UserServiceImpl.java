@@ -22,13 +22,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User findUserById(UUID id) throws UserAppException {
-		return storage.findUserById(id.toString());
-	}
-
-	@Override
-	public List<User> findUserByName(String name) throws UserAppException {
-		return storage.findUserByName(name);
+	public User findUserById(long id) throws UserAppException {
+		return storage.findUserById("" + id);
 	}
 
 	@Override
@@ -42,27 +37,27 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void createUser(String name, String email, String password, String handle) throws UserAppException {
-		User u = new User(name, email, password, handle, UUID.randomUUID());
+	public void createUser(String email, String password, String handle) throws UserAppException {
+		User u = new User(email, password, handle, UUID.randomUUID().getMostSignificantBits() &Long.MAX_VALUE);
 		storage.addUser(u);
 		
 	}
 
 	@Override
-	public void updateUser(UUID id, String name, String email, String handle) throws UserAppException {
-		storage.updateUser(id.toString(), name, email, handle);
+	public void updateUser(long id, String email, String handle) throws UserAppException {
+		storage.updateUser("" + id, email, handle);
 		
 	}
 	
 	@Override
-	public void updatePassword(UUID id, String password) {
-		storage.updatePassword(id.toString(), password);
+	public void updatePassword(long id, String password) {
+		storage.updatePassword("" + id, password);
 		
 	}
 
 	@Override
-	public void deleteUser(UUID id) throws UserAppException {
-		storage.deleteUser(id.toString());
+	public void deleteUser(long id) throws UserAppException {
+		storage.deleteUser("" + id);
 	}
 
 }

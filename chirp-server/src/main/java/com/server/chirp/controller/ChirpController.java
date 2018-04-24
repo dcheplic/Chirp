@@ -12,10 +12,13 @@ import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class ChirpController {
-
+	Map<String, String> chirpMap;
+	Gson gson;
 	// HTTP verb -> REST meaning
 	// GET -> read
 	// POST -> create
@@ -23,7 +26,8 @@ public class ChirpController {
 	// DELETE -> delete
 
 	public ChirpController(ChirpService service) {
-		Gson gson = new GsonBuilder().setLenient().setDateFormat("EEE, dd/MM/yyyy").create();
+		chirpMap = new HashMap<>();
+		gson = new GsonBuilder().setLenient().setDateFormat("EEE, dd/MM/yyyy").create();
 		get("/chirps", (req, res) -> {
 			if(service.getChirps() == null) {
 				halt(404, "Chirps not found");
@@ -68,8 +72,12 @@ public class ChirpController {
 		post("/chirps/a", (req, res) -> {
 			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
+			chirpMap.put("id", chirp.getUserId());
+			chirpMap.put("chirp_created", "true");
+			chirpMap.put("message", chirp.getMessage());
+			chirpMap.put("date", chirp.getDate().toString());
 			service.addChirp(chirp.getMessage(), date, chirp.getUserId());
-			return "Chirp added";
+			return chirpMap;
 		}, json());
 	}
 

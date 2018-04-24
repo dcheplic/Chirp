@@ -28,14 +28,6 @@ public class InMemoryUserStorage implements UserStorage{
 		return users.get(id);
 	}
 
-	@Override
-	public List<User> findUserByName(String name) throws StorageException {
-		List<User> result = new ArrayList<User>();
-		for(User u : users.values())
-			if(u.getName().equals(name))
-				result.add(u);
-		return result;
-	}
 
 	@Override
 	public User findUserByEmail(String email) throws StorageException {
@@ -55,12 +47,11 @@ public class InMemoryUserStorage implements UserStorage{
 
 	@Override
 	public void addUser(User user) throws StorageException {
-		users.put(user.getId().toString(), user);
+		users.put(user.getId() + "", user);
 	}
 
 	@Override
-	public void updateUser(String id, String name, String email, String handle) throws StorageException {
-		users.get(id).setName(name);
+	public void updateUser(String id, String email, String handle) throws StorageException {
 		users.get(id).setEmail(email);
 		users.get(id).setHandle(handle);
 	}

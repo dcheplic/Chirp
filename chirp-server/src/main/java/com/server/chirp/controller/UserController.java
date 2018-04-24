@@ -11,19 +11,24 @@ import static spark.Spark.put;
 import static spark.Spark.delete;
 import static spark.Spark.halt;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class UserController {
-	
+	Map<String,String> userMap;
+	Gson gson;
 	// HTTP verb -> REST meaning
 	// GET -> read
 	// POST -> create
 	// PUT -> update
 	// DELETE -> delete
 
-	//returns list of users
 	public UserController(UserService service) {
-		Gson gson = new Gson();
+		gson = new Gson();
+		userMap = new HashMap<>();
+		
+		//returns list of users
 		get("/users",(req, res) -> {
 			if(service.getUsers() == null) {
 				halt(404, "Users not found");
@@ -33,16 +38,16 @@ public class UserController {
 		}, json());
 
 		//returns user based on id
-		get("/users/:id", (req, res) -> {
-			if(service.findUserById(UUID.fromString(req.params("id"))) == null) {
+		get("/users/fi/:id", (req, res) -> {
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
 				halt(404, "User not found");
 				return null;
 			}
-			return service.findUserById(UUID.fromString(req.params("id")));
+			return service.findUserById(Long.parseLong(req.params("id")));
 		}, json());	
 
 		//returns users based on email
-		get("/users/:email", (req, res) -> {
+		get("/users/fe/:email", (req, res) -> {
 			if(service.findUserByEmail(req.params("email")) == null) {
 				halt(404, "User not found");
 				return null;
@@ -51,7 +56,7 @@ public class UserController {
 		}, json());
 
 		//returns user based on handle
-		get("/users/:handle", (req, res) -> {
+		get("/users/fh/:handle", (req, res) -> {
 			if(service.findUserByHandle(req.params("handle")) == null) {
 				halt(404, "User not found");
 				return null;
@@ -59,56 +64,69 @@ public class UserController {
 			return service.findUserByHandle(req.params("handle"));
 		}, json());
 
-		//returns users based on name
-		get("/users/:name", (req, res) -> {
-			if(service.findUserByName(req.params("name")) == null) {
-				halt(404, "User not found");
-				return null;
-			}
-			return service.findUserByName(req.params("name"));
-		}, json());
-
 		//creates new user
 		post("/users/c", (req, res) -> {
 			User user = gson.fromJson(req.body(), User.class);
-			service.createUser(user.getName(), user.getEmail(), user.getPassword(), user.getHandle());
-			return "User created";
+			if(service.findUserByEmail(user.getEmail()) != null) {
+				halt("Email already in use");
+				return null;
+			}
+			userMap.put("id", Long.toString(user.getId()));
+			userMap.put("user_created", "true");
+			userMap.put("email", user.getEmail());
+			userMap.put("password", user.getPassword());
+			userMap.put("handle", user.getHandle());
+			service.createUser(user.getEmail(), user.getPassword(), user.getHandle());
+			return userMap;
 		}, json());	
 		
 		// TODO possibly flesh out update methods
 
 		//updates user with provided information
 		put("/users/u/:id", (req, res) -> {
-			if(service.findUserById(UUID.fromString(req.params("id"))) == null) {
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
 				halt(404, "User not found");
 				return null;
 			}
-			UUID id = UUID.fromString(req.params("id"));
+			long id = Long.parseLong(req.params("id"));
 			User user = gson.fromJson(req.body(), User.class);
-			service.updateUser(id, user.getName(), user.getEmail(), user.getHandle());
-			return "User updated";
+			userMap.put("id", Long.toString(user.getId()));
+			userMap.put("user_created", "true");
+			userMap.put("email", user.getEmail());
+			userMap.put("password", user.getPassword());
+			userMap.put("handle", user.getHandle());
+			service.updateUser(id, user.getEmail(), user.getHandle());
+			return userMap;
 		}, json());	
 
 		//updates user password based on user id
 		put("/users/pu/:id", (req, res) -> {
-			if(service.findUserById(UUID.fromString(req.params("id"))) == null) {
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
 				halt(404, "User not found");
 				return null;
 			}
-			UUID id = UUID.fromString(req.params("id"));
+			long id = Long.parseLong(req.params("id"));
 			User user = gson.fromJson(req.body(), User.class);
+			userMap.put("id", Long.toString(user.getId()));
+			userMap.put("user_created", "true");
+			userMap.put("email", user.getEmail());
+			userMap.put("password", user.getPassword());
+			userMap.put("handle", user.getHandle());
 			service.updatePassword(id, user.getPassword());
-			return "User password updated";
+			return userMap;
 		}, json());	
 
 		//deletes user based on id
 		delete("/users/d/:id", (req, res) -> {
-			if(service.findUserById(UUID.fromString(req.params("id"))) == null) {
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
 				halt(404, "User not found");
 				return null;
 			}
-			service.deleteUser(UUID.fromString(req.params("id")));
-			return "User deleted";
+			userMap.clear();
+			userMap.put("id", req.params("id"));
+			userMap.put("user_deleted", "true");
+			service.deleteUser(Long.parseLong(req.params("id")));
+			return userMap;
 		}, json());	
 	}
 
