@@ -44,12 +44,12 @@ public class ChirpController {
 			return service.findChirpsByMessage(req.params("message"));
 		}, json());
 		
-		get("/chirps/fi/:id", (req, res) -> {
-			if(service.findChirpsByUser(req.params("id")) == null) {
+		get("/chirps/fi/:userId", (req, res) -> {
+			if(service.findChirpsByUser(req.params("userId")) == null) {
 				halt(404, "Chirps not found");
 				return null;
 			}
-			return service.findChirpsByUser(req.params("id"));
+			return service.findChirpsByUser(req.params("userId"));
 		}, json());
 		
 		get("/chirps/fd/:date", (req, res) -> {
@@ -73,7 +73,8 @@ public class ChirpController {
 			chirpMap.clear();
 			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
-			chirpMap.put("id", chirp.getUserId());
+			chirpMap.put("id", chirp.getId());
+			chirpMap.put("userId", chirp.getUserId());
 			chirpMap.put("chirp_created", "true");
 			chirpMap.put("message", chirp.getMessage());
 			chirpMap.put("date", chirp.getDate().toString());
@@ -94,10 +95,12 @@ public class ChirpController {
 		private String message;
 		private String date;
 		private String userId;
+		private String id;
 		
 		public String getMessage() {return message;}
 		public String getDate() {return date;}
 		public String getUserId() {return userId;}
+		public String getId() {return id;}
 	}
 
 }

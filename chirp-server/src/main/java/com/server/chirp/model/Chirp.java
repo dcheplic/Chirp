@@ -47,6 +47,10 @@ public class Chirp {
 		return userId;
 	}
 	
+	public String getId() {
+		return id;
+	}
+	
 	public static Chirp fromItem(Item item) {
 		Date date = null;
 		try {
@@ -54,16 +58,13 @@ public class Chirp {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return new Chirp(item.getString("message"), date, item.getString("id"));
+		return new Chirp(item.getString("message"), date, item.getString("userId"));
 	}
 	
 	public void fillItem(Item item) {
-		item.withPrimaryKey("id", getUserId())
+		item.withPrimaryKey("id", getId())
 		.withString("message", getMessage())
-		.with("date", getDate().toString());
-	}
-	
-	public String getId() {
-		return id;
+		.with("date", getDate().toString())
+		.with("userId", getUserId());
 	}
 }
