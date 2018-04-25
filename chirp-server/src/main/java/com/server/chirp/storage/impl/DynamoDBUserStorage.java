@@ -53,7 +53,7 @@ public class DynamoDBUserStorage implements UserStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		User user = null;
 		for(Item item : collection)
-			if(User.fromItem(item).getEmail() == email)
+			if(User.fromItem(item).getEmail().equals(email))
 				user = User.fromItem(item);
 		return user;
 	}
@@ -64,7 +64,7 @@ public class DynamoDBUserStorage implements UserStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		User user = null;
 		for(Item item : collection)
-			if(User.fromItem(item).getHandle() == handle)
+			if(User.fromItem(item).getHandle().equals(handle))
 				user = User.fromItem(item);
 		return user;
 	}

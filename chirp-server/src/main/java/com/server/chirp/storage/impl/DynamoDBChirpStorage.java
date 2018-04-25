@@ -41,7 +41,7 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
-			if(Chirp.fromItem(item).getMessage() == message)
+			if(Chirp.fromItem(item).getMessage().equals(message))
 				result.add(Chirp.fromItem(item));
 		return result;
 	}
@@ -52,7 +52,7 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
-			if(Chirp.fromItem(item).getDate().toString() == date)
+			if(Chirp.fromItem(item).getDate().toString().equals(date))
 				result.add(Chirp.fromItem(item));
 		return result;
 	}
@@ -63,7 +63,7 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
-			if(Chirp.fromItem(item).getUserId() == id)
+			if(Chirp.fromItem(item).getUserId().equals(id))
 				result.add(Chirp.fromItem(item));
 		return result;
 	}

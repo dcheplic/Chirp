@@ -36,7 +36,7 @@ public class ChirpController {
 			return service.getChirps();
 		}, json());
 		
-		get("/chirps/:message", (req, res) -> {
+		get("/chirps/fm/:message", (req, res) -> {
 			if(service.findChirpsByMessage(req.params("message")) == null) {
 				halt(404, "Chirps not found");
 				return null;
@@ -44,7 +44,7 @@ public class ChirpController {
 			return service.findChirpsByMessage(req.params("message"));
 		}, json());
 		
-		get("/chirps/:id", (req, res) -> {
+		get("/chirps/fi/:id", (req, res) -> {
 			if(service.findChirpsByUser(req.params("id")) == null) {
 				halt(404, "Chirps not found");
 				return null;
@@ -52,7 +52,7 @@ public class ChirpController {
 			return service.findChirpsByUser(req.params("id"));
 		}, json());
 		
-		get("/chirps/:date", (req, res) -> {
+		get("/chirps/fd/:date", (req, res) -> {
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(req.params("date"));
 			if(service.findChirpsByDate(date) == null) {
 				halt(404, "Chirps not found");
@@ -61,7 +61,7 @@ public class ChirpController {
 			return service.findChirpsByDate(date);
 		}, json());
 		
-		get("/chirps/:handle", (req, res) -> {
+		get("/chirps/fh/:handle", (req, res) -> {
 			if(service.findChirpsByUser(req.params("handle")) == null) {
 				halt(404, "Chirps not found");
 				return null;

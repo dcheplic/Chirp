@@ -11,6 +11,7 @@ import static spark.Spark.put;
 import static spark.Spark.delete;
 import static spark.Spark.halt;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -27,6 +28,12 @@ public class UserController {
 	public UserController(UserService service) {
 		gson = new Gson();
 		userMap = new HashMap<>();
+		Date date = new Date();
+		
+		//opening page
+		get("/",(req, res) -> {
+			return "Chirp Server: Hi, welcome to Chilis!";
+		}, json());
 		
 		//returns list of users
 		get("/users",(req, res) -> {
