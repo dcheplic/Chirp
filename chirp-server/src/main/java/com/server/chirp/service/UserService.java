@@ -1,5 +1,6 @@
 package com.server.chirp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.server.chirp.model.User;
@@ -14,4 +15,6 @@ public interface UserService {
 	public void updateUser(long id, String email, String handle) throws UserAppException; //will update user with id "id"
 	public void updatePassword(long id, String password); //Will update user password based on id
 	public void deleteUser(long id) throws UserAppException; //will delete user with id "id"
+	public ArrayList<Long> getWatchList(long userId) throws UserAppException; //returns list of watched users
+	public void addUserToWatchlist(long watcherId, long watchedId) throws UserAppException; //adds user to watchlist
 }

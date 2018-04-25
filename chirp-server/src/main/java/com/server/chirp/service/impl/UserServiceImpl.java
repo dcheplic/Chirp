@@ -1,5 +1,6 @@
 package com.server.chirp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,6 +59,16 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void deleteUser(long id) throws UserAppException {
 		storage.deleteUser("" + id);
+	}
+
+	@Override
+	public ArrayList<Long> getWatchList(long userId) throws UserAppException {
+		return storage.getWatchList(Long.toString(userId));
+	}
+
+	@Override
+	public void addUserToWatchlist(long watcherId, long watchedId) throws UserAppException {
+		storage.addUserToWatchlist(Long.toString(watcherId), Long.toString(watchedId));
 	}
 
 }

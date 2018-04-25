@@ -1,5 +1,8 @@
 package com.server.chirp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.amazonaws.services.dynamodbv2.document.Item;
 
 public class User {
@@ -7,6 +10,7 @@ public class User {
 	private String password;
 	private String handle;
 	private long id;
+	private ArrayList<Long> watchlist; 
 	
 	//default constructor, needed by GSON
 	private User(){}
@@ -16,6 +20,7 @@ public class User {
 		this.password = password;
 		this.handle = handle;
 		this.id = id;
+		watchlist = new ArrayList<>();
 	}
 	
 	public void setEmail(String email) {
@@ -48,6 +53,17 @@ public class User {
 	
 	public long getId() {
 		return id;
+	}
+	
+	public ArrayList<Long> getWatchlist() {
+		List<Long> listCopy = new ArrayList<>();
+		for(long id : watchlist)
+			listCopy.add(id);
+		return watchlist;
+	}
+	
+	public void addToWatchlist(long id) {
+		watchlist.add(id);
 	}
 	
 	public static User fromItem(Item item) {

@@ -13,6 +13,7 @@ import com.server.chirp.model.User;
 import com.server.chirp.storage.UserStorage;
 import com.server.chirp.util.DynamoDBConnectionManager;
 import com.server.chirp.util.StorageException;
+import com.server.chirp.util.UserAppException;
 
 public class DynamoDBUserStorage implements UserStorage{
 
@@ -120,6 +121,28 @@ public class DynamoDBUserStorage implements UserStorage{
 				table.deleteItem(deleteItemSpec);
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<Long> getWatchList(String userId) throws UserAppException {
+		Table table = getTable(getDB());
+		ItemCollection<ScanOutcome> collection = table.scan();
+		User user = null;
+		for(Item item : collection)
+			if((User.fromItem(item).getId() + "").equals(userId))
+				user = User.fromItem(item);
+		return user.getWatchlist();
+	}
+
+	@Override
+	public void addUserToWatchlist(String watcherId, String watchedId) throws UserAppException {
+		Table table = getTable(getDB());
+		ItemCollection<ScanOutcome> collection = table.scan();
+		User user = null;
+		for(Item item : collection)
+			if((User.fromItem(item).getId() + "").equals(watcherId))
+				user = User.fromItem(item);
+		user.addToWatchlist(Long.parseLong(watchedId));
 	}
 
 }

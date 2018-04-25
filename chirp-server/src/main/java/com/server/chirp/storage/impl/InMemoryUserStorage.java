@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.server.chirp.model.User;
 import com.server.chirp.storage.UserStorage;
 import com.server.chirp.util.StorageException;
+import com.server.chirp.util.UserAppException;
 
 public class InMemoryUserStorage implements UserStorage{
 	
@@ -65,5 +67,18 @@ public class InMemoryUserStorage implements UserStorage{
 	public void deleteUser(String id) throws StorageException {
 		users.remove(id);
 	}
+
+	@Override
+	public ArrayList<Long> getWatchList(String userId) throws UserAppException {
+		return users.get(userId).getWatchlist();
+	}
+
+	@Override
+	public void addUserToWatchlist(String watcherId, String watchedId) throws UserAppException {
+		User user = findUserById(watcherId);
+		user.addToWatchlist(Long.parseLong(watchedId));
+	}
+	
+	
 
 }

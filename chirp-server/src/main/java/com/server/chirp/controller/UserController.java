@@ -32,7 +32,7 @@ public class UserController {
 		
 		//opening page
 		get("/",(req, res) -> {
-			return "Chirp Server: Hi, welcome to Chilis!";
+			return "Let be be the finale of seem. The only emperor is the emperor of ice cream.";
 		}, json());
 		
 		//returns list of users
@@ -70,6 +70,15 @@ public class UserController {
 			}
 			return service.findUserByHandle(req.params("handle"));
 		}, json());
+		
+		//returns specified user watchlist
+		get("/users/fw/:id",(req, res) -> {
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
+				halt(404, "User not found");
+				return null;
+			}
+			return service.getWatchList(Long.parseLong(req.params("id")));
+		},json());
 
 		//creates new user
 		post("/users/c", (req, res) -> {
@@ -126,7 +135,22 @@ public class UserController {
 			userMap.put("handle", user.getHandle());
 			service.updatePassword(id, user.getPassword());
 			return userMap;
-		}, json());	
+		}, json());
+		
+		//adds user to specified user's watchlist
+		put("/users/aw/:id", (req, res) -> {
+			userMap.clear();
+			if(service.findUserById(Long.parseLong(req.params("id"))) == null) {
+				halt(404, "User not found");
+				userMap.put("user_added", "false");
+				return userMap;
+			}
+			long watcherId = Long.parseLong(req.params("watcherId"));
+			long watchedId = Long.parseLong(req.params("watchedId"));
+			service.addUserToWatchlist(watcherId, watchedId);
+			userMap.put("user_added", "true");
+			return userMap;
+		},json());
 
 		//deletes user based on id
 		delete("/users/d/:id", (req, res) -> {
@@ -139,7 +163,7 @@ public class UserController {
 			userMap.put("user_deleted", "true");
 			service.deleteUser(Long.parseLong(req.params("id")));
 			return userMap;
-		}, json());	
+		}, json());
 	}
 
 	public static String toJson(Object object) {
