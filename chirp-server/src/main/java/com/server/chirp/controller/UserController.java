@@ -83,21 +83,24 @@ public class UserController {
 		//creates new user
 		post("/users/c", (req, res) -> {
 			userMap.clear();
-			User user = gson.fromJson(req.body(), User.class);
-			if(service.findUserByEmail(user.getEmail()) != null) {
+			User userWithoutID = gson.fromJson(req.body(), User.class);
+			if(service.findUserByEmail(userWithoutID.getEmail()) != null) {
 				halt("Email already in use");
-				userMap.put("id", Long.toString(user.getId()));
 				userMap.put("user_created", "false");
 				return userMap;
 			}
-			userMap.put("id", Long.toString(user.getId()));
-			userMap.put("user_created", "true");
-			userMap.put("email", user.getEmail());
-			userMap.put("password", user.getPassword());
-			userMap.put("handle", user.getHandle());
-			service.createUser(user.getEmail(), user.getPassword(), user.getHandle());
+		     service.createUser(userWithoutID.getEmail(), userWithoutID.getPassword(), userWithoutID.getHandle());
+		     userMap.put("user_created", "true");
+
+		     User userWithID = service.findUserByEmail(userWithoutID.getEmail());
+
+			userMap.put("id", Long.toString(userWithID.getId()));
+			userMap.put("email", userWithID.getEmail());
+			userMap.put("password", userWithID.getPassword());
+			userMap.put("handle", userWithID.getHandle());
+
 			return userMap;
-		}, json());	
+		}, json());
 		
 		// TODO possibly flesh out update methods
 

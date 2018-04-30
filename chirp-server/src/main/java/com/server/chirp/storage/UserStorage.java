@@ -9,7 +9,7 @@ import com.server.chirp.util.UserAppException;
 
 public interface UserStorage {
 	
-	public List<User> getUsers() throws StorageException; //will return list of all users
+	public User[] getUsers() throws StorageException; //will return list of all users
 	public User findUserById(String id) throws StorageException; //will return user based on id
 	public User findUserByEmail(String email) throws StorageException; //will return user based on email
 	public User findUserByHandle(String handle) throws StorageException; //will return user based on handle

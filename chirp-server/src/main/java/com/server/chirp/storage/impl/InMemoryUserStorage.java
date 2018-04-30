@@ -21,8 +21,12 @@ public class InMemoryUserStorage implements UserStorage{
 	}
 
 	@Override
-	public List<User> getUsers() throws StorageException {
-		return new ArrayList<User>(users.values());
+	public User[] getUsers() throws StorageException {
+		ArrayList<User> result = new ArrayList<User>(users.values());
+		User[] returner = new User[result.size()];
+		for(int i = 0; i < result.size(); i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override

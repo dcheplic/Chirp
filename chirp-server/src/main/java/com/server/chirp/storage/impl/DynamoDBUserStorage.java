@@ -28,13 +28,16 @@ public class DynamoDBUserStorage implements UserStorage{
 	}
 
 	@Override
-	public List<User> getUsers() throws StorageException {
+	public User[] getUsers() throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<User> result = new ArrayList<User>();
 		for(Item item : collection)
 			result.add(User.fromItem(item));
-		return result;
+		User[] returner = new User[result.size()];
+		for(int i = 0; i < result.size(); i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override

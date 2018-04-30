@@ -7,7 +7,7 @@ import com.server.chirp.model.User;
 import com.server.chirp.util.UserAppException;
 
 public interface UserService {
-	public List<User> getUsers() throws UserAppException; //will return list of all users
+	public User[] getUsers() throws UserAppException; //will return list of all users
 	public User findUserById(long id) throws UserAppException; //will return user based on id
 	public User findUserByEmail(String email) throws UserAppException; //will return user based on email
 	public User findUserByHandle(String handle) throws UserAppException; //will return user based on handle
