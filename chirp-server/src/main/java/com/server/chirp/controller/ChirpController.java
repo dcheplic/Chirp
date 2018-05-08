@@ -53,12 +53,11 @@ public class ChirpController {
 		}, json());
 		
 		get("/chirps/fd/:date", (req, res) -> {
-			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(req.params("date"));
-			if(service.findChirpsByDate(date) == null) {
+			if(service.findChirpsByDate(req.params("date")) == null) {
 				halt(404, "Chirps not found");
 				return null;
 			}
-			return service.findChirpsByDate(date);
+			return service.findChirpsByDate(req.params("date"));
 		}, json());
 		
 		get("/chirps/fh/:handle", (req, res) -> {
@@ -72,13 +71,12 @@ public class ChirpController {
 		post("/chirps/a", (req, res) -> {
 			chirpMap.clear();
 			ChirpTransport chirp = gson.fromJson(req.body(), ChirpTransport.class);
-			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(chirp.getDate());
 			chirpMap.put("id", chirp.getId());
 			chirpMap.put("userId", chirp.getUserId());
 			chirpMap.put("chirp_created", "true");
 			chirpMap.put("message", chirp.getMessage());
 			chirpMap.put("date", chirp.getDate().toString());
-			service.addChirp(chirp.getMessage(), date, chirp.getUserId());
+			service.addChirp(chirp.getMessage(), chirp.getDate(), chirp.getUserId());
 			return chirpMap;
 		}, json());
 	}

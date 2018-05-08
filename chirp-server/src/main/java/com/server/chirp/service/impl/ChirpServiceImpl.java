@@ -27,7 +27,7 @@ public class ChirpServiceImpl implements ChirpService{
 	}
 
 	@Override
-	public Chirp[] findChirpsByDate(Date date) throws UserAppException {
+	public Chirp[] findChirpsByDate(String date) throws UserAppException {
 		return storage.findChirpsByDate(date.toString());
 	}
 
@@ -43,7 +43,7 @@ public class ChirpServiceImpl implements ChirpService{
 	}
 
 	@Override
-	public void addChirp(String message, Date date, String userId) throws UserAppException {
+	public void addChirp(String message, String date, String userId) throws UserAppException {
 		Chirp chirp = new Chirp(message, date, userId);
 		storage.addChirp(chirp);
 	}

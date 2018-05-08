@@ -9,14 +9,14 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 
 public class Chirp {
 	private String message;
-	private Date date;
+	private String date;
 	private String userId;
 	private String id;
 	
 	//default constructor needed for Gson
 	private Chirp() {}
 	
-	public Chirp(String message, Date date, String userId) {
+	public Chirp(String message, String date, String userId) {
 		this.message = message;
 		this.date = date;
 		this.userId = userId;
@@ -27,7 +27,7 @@ public class Chirp {
 		this.message = message;
 	}
 	
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
@@ -39,7 +39,7 @@ public class Chirp {
 		return message;
 	}
 	
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 	
@@ -52,13 +52,7 @@ public class Chirp {
 	}
 	
 	public static Chirp fromItem(Item item) {
-		Date date = null;
-		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(item.getString("date"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return new Chirp(item.getString("message"), date, item.getString("userId"));
+		return new Chirp(item.getString("message"), item.getString("date"), item.getString("userId"));
 	}
 	
 	public void fillItem(Item item) {
