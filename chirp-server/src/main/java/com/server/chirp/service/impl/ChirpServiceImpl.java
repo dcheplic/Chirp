@@ -17,28 +17,28 @@ public class ChirpServiceImpl implements ChirpService{
 	}
 
 	@Override
-	public List<Chirp> getChirps() throws UserAppException {
+	public Chirp[] getChirps() throws UserAppException {
 		return storage.getChirps();
 	}
 
 	@Override
-	public List<Chirp> findChirpsByMessage(String message) throws UserAppException {
+	public Chirp[] findChirpsByMessage(String message) throws UserAppException {
 		return storage.findChirpsByMessage(message);
 	}
 
 	@Override
-	public List<Chirp> findChirpsByDate(Date date) throws UserAppException {
+	public Chirp[] findChirpsByDate(Date date) throws UserAppException {
 		return storage.findChirpsByDate(date.toString());
 	}
 
 	@Override
-	public List<Chirp> findChirpsByUser(String id) throws UserAppException {
+	public Chirp[] findChirpsByUser(String id) throws UserAppException {
 		return storage.findChirpsByUser(id);
 	}
 	
 
 	@Override
-	public List<Chirp> findChirpsContainingUser(String handle) throws UserAppException {
+	public Chirp[] findChirpsContainingUser(String handle) throws UserAppException {
 		return storage.findChirpsContainingUser(handle);
 	}
 

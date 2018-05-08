@@ -26,46 +26,58 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 	}
 
 	@Override
-	public List<Chirp> getChirps() throws StorageException {
+	public Chirp[] getChirps() throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
 			result.add(Chirp.fromItem(item));
-		return result;
+		Chirp[] returner = new Chirp[result.size()];
+		for(int i = 0; i < returner.length; i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override
-	public List<Chirp> findChirpsByMessage(String message) throws StorageException {
+	public Chirp[] findChirpsByMessage(String message) throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
 			if(Chirp.fromItem(item).getMessage().equals(message))
 				result.add(Chirp.fromItem(item));
-		return result;
+		Chirp[] returner = new Chirp[result.size()];
+		for(int i = 0; i < returner.length; i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override
-	public List<Chirp> findChirpsByDate(String date) throws StorageException {
+	public Chirp[] findChirpsByDate(String date) throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
 			if(Chirp.fromItem(item).getDate().toString().equals(date))
 				result.add(Chirp.fromItem(item));
-		return result;
+		Chirp[] returner = new Chirp[result.size()];
+		for(int i = 0; i < returner.length; i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override
-	public List<Chirp> findChirpsByUser(String id) throws StorageException {
+	public Chirp[] findChirpsByUser(String id) throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
 			if(Chirp.fromItem(item).getUserId().equals(id))
 				result.add(Chirp.fromItem(item));
-		return result;
+		Chirp[] returner = new Chirp[result.size()];
+		for(int i = 0; i < returner.length; i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 	@Override
@@ -78,14 +90,17 @@ public class DynamoDBChirpStorage implements ChirpStorage{
 	}
 
 	@Override
-	public List<Chirp> findChirpsContainingUser(String handle) throws StorageException {
+	public Chirp[] findChirpsContainingUser(String handle) throws StorageException {
 		Table table = getTable(getDB());
 		ItemCollection<ScanOutcome> collection = table.scan();
 		ArrayList<Chirp> result = new ArrayList<Chirp>();
 		for(Item item : collection)
 			if(Chirp.fromItem(item).getMessage().contains(handle))
 				result.add(Chirp.fromItem(item));
-		return result;
+		Chirp[] returner = new Chirp[result.size()];
+		for(int i = 0; i < returner.length; i++)
+			returner[i] = result.get(i);
+		return returner;
 	}
 
 }
